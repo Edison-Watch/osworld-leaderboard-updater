@@ -13,11 +13,10 @@ struct Entry {
 }
 
 fn fetch_xlsx() -> Vec<u8> {
-    reqwest::blocking::get(XLSX_URL)
-        .expect("failed to fetch xlsx")
-        .bytes()
-        .expect("failed to read response body")
-        .to_vec()
+    let resp = reqwest::blocking::get(XLSX_URL).expect("failed to fetch xlsx");
+    let status = resp.status();
+    assert!(status.is_success(), "HTTP {status} fetching xlsx");
+    resp.bytes().expect("failed to read response body").to_vec()
 }
 
 fn parse_entries(data: &[u8]) -> Vec<Entry> {
@@ -54,7 +53,11 @@ fn parse_entries(data: &[u8]) -> Vec<Entry> {
         };
 
         // Filter: Foundation E2E GUI
-        if get(i_approach) != "General model" || get(i_a11y) != "No" || get(i_coding) != "No" || get(i_rollout) != "No" {
+        if !get(i_approach).eq_ignore_ascii_case("General model")
+            || !get(i_a11y).eq_ignore_ascii_case("no")
+            || !get(i_coding).eq_ignore_ascii_case("no")
+            || !get(i_rollout).eq_ignore_ascii_case("no")
+        {
             continue;
         }
 
@@ -72,7 +75,7 @@ fn parse_entries(data: &[u8]) -> Vec<Entry> {
         });
     }
 
-    entries.sort_by(|a, b| b.success_rate.partial_cmp(&a.success_rate).unwrap());
+    entries.sort_by(|a, b| b.success_rate.total_cmp(&a.success_rate));
     entries.truncate(4);
     entries
 }
@@ -93,7 +96,13 @@ fn cell_to_string(cell: &Data) -> String {
 
 fn parse_success_rate(s: &str) -> Option<f64> {
     let cleaned = s.replace('%', "").trim().to_string();
-    cleaned.parse::<f64>().ok()
+    let v = cleaned.parse::<f64>().ok()?;
+    if v.is_nan() || v.is_infinite() {
+        return None;
+    }
+    // If calamine returned the raw Excel fraction (0..=1) instead of a
+    // percentage integer (0..=100), scale it up.
+    Some(if v > 0.0 && v <= 1.0 { v * 100.0 } else { v })
 }
 
 fn render_svg(entries: &[Entry]) -> String {
