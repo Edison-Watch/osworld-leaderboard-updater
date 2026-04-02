@@ -155,11 +155,11 @@ fn render_svg(entries: &[Entry]) -> String {
 
     let mut svg = String::new();
 
+    let font = "Inter, Helvetica, Roboto, sans-serif";
+
     svg.push_str(&format!(
-        r##"<svg xmlns="http://www.w3.org/2000/svg" width="800" height="{total_height}" viewBox="0 0 800 {total_height}">
-<style>
-  text {{ font-family: Inter, Helvetica, Roboto, sans-serif; }}
-</style>
+        r##"<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="{total_height}" viewBox="0 0 800 {total_height}">
 <rect width="800" height="{total_height}" fill="#000000"/>
 "##
     ));
@@ -192,7 +192,7 @@ fn render_svg(entries: &[Entry]) -> String {
         let text_x = cx + 12.0;
         let text_y = table_y + header_height / 2.0 + 5.0;
         svg.push_str(&format!(
-            r##"<text x="{text_x}" y="{text_y}" fill="#C3FFFD" font-size="13" font-weight="600">{label}</text>
+            r##"<text x="{text_x}" y="{text_y}" fill="#C3FFFD" font-family="{font}" font-size="13" font-weight="600">{label}</text>
 "##
         ));
         cx += col_widths[i];
@@ -231,7 +231,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Rank
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-size="13" font-weight="500">{rank}</text>
+            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-family="{font}" font-size="13" font-weight="500">{rank}</text>
 "##,
             cx + 12.0
         ));
@@ -239,7 +239,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Model
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-size="13">{}</text>
+            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-family="{font}" font-size="13">{}</text>
 "##,
             cx + 12.0,
             escape_xml(&entry.model)
@@ -248,7 +248,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Institution
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#9BA4A6" font-size="12">{}</text>
+            r##"<text x="{}" y="{text_y}" fill="#9BA4A6" font-family="{font}" font-size="12">{}</text>
 "##,
             cx + 12.0,
             escape_xml(&entry.institution)
@@ -257,7 +257,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Max Steps
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-size="13">{}</text>
+            r##"<text x="{}" y="{text_y}" fill="#F9F9F9" font-family="{font}" font-size="13">{}</text>
 "##,
             cx + 12.0,
             escape_xml(&entry.max_steps)
@@ -266,7 +266,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Date
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#9BA4A6" font-size="11">{}</text>
+            r##"<text x="{}" y="{text_y}" fill="#9BA4A6" font-family="{font}" font-size="11">{}</text>
 "##,
             cx + 12.0,
             escape_xml(&entry.date)
@@ -275,7 +275,7 @@ fn render_svg(entries: &[Entry]) -> String {
 
         // Success Rate
         svg.push_str(&format!(
-            r##"<text x="{}" y="{text_y}" fill="#C3FFFD" font-size="13" font-weight="700">{:.1}%</text>
+            r##"<text x="{}" y="{text_y}" fill="#C3FFFD" font-family="{font}" font-size="13" font-weight="700">{:.1}%</text>
 "##,
             cx + 12.0,
             entry.success_rate
@@ -285,7 +285,7 @@ fn render_svg(entries: &[Entry]) -> String {
     // Updated timestamp
     let now = Utc::now().format("%Y-%m-%d");
     svg.push_str(&format!(
-        r##"<text x="780" y="{}" fill="#5E6575" font-size="10" text-anchor="end">Updated: {now}</text>
+        r##"<text x="780" y="{}" fill="#5E6575" font-family="{font}" font-size="10" text-anchor="end">Updated: {now}</text>
 "##,
         total_height - 8.0
     ));
