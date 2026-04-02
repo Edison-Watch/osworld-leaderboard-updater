@@ -114,10 +114,9 @@ fn date_cell_to_string(cell: Option<&Data>) -> String {
 
 fn excel_serial_to_date(serial: f64) -> String {
     use chrono::NaiveDate;
+    // Epoch 1899-12-30 already absorbs Excel's 1900 leap-year bug for serial >= 61
     let epoch = NaiveDate::from_ymd_opt(1899, 12, 30).unwrap();
     let days = serial as i64;
-    // Excel has a leap year bug for 1900; dates >= 60 are off by 1
-    let days = if days >= 60 { days - 1 } else { days };
     match epoch.checked_add_signed(chrono::Duration::days(days)) {
         Some(d) => d.format("%Y-%m-%d").to_string(),
         None => format!("{serial}"),
