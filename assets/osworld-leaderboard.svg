@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="230" viewBox="0 0 800 230">
+<rect width="800" height="230" fill="#000000"/>
+<rect x="20" y="16" width="760" height="184" fill="none" stroke="#C3FFFD" stroke-width="1"/>
+<rect x="20" y="16" width="760" height="40" fill="#1C1C1C"/>
+<line x1="20" y1="56" x2="780" y2="56" stroke="#C3FFFD" stroke-width="1"/>
+<text x="32" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Rank</text>
+<line x1="70" y1="16" x2="70" y2="200" stroke="#C3FFFD" stroke-width="0.5" opacity="0.3"/>
+<text x="82" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Model</text>
+<line x1="290" y1="16" x2="290" y2="200" stroke="#C3FFFD" stroke-width="0.5" opacity="0.3"/>
+<text x="302" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Institution</text>
+<line x1="450" y1="16" x2="450" y2="200" stroke="#C3FFFD" stroke-width="0.5" opacity="0.3"/>
+<text x="462" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Max Steps</text>
+<line x1="530" y1="16" x2="530" y2="200" stroke="#C3FFFD" stroke-width="0.5" opacity="0.3"/>
+<text x="542" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Date</text>
+<line x1="640" y1="16" x2="640" y2="200" stroke="#C3FFFD" stroke-width="0.5" opacity="0.3"/>
+<text x="652" y="41" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="600">Success Rate</text>
+<rect x="20" y="56" width="760" height="36" fill="#C3FFFD" opacity="0.08"/>
+<text x="32" y="79" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="500">1</text>
+<text x="82" y="79" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">claude-sonnet-4-6</text>
+<text x="302" y="79" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="12">Anthropic</text>
+<text x="462" y="79" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">100</text>
+<text x="542" y="79" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="11">2026-03-08</text>
+<text x="652" y="79" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="700">72.1%</text>
+<line x1="20" y1="92" x2="780" y2="92" stroke="#C3FFFD" stroke-width="0.5" opacity="0.15"/>
+<text x="32" y="115" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="500">2</text>
+<text x="82" y="115" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">Kimi K2.5</text>
+<text x="302" y="115" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="12">Moonshot AI</text>
+<text x="462" y="115" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">100</text>
+<text x="542" y="115" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="11">2026-01-31</text>
+<text x="652" y="115" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="700">63.3%</text>
+<line x1="20" y1="128" x2="780" y2="128" stroke="#C3FFFD" stroke-width="0.5" opacity="0.15"/>
+<text x="32" y="151" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="500">3</text>
+<text x="82" y="151" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">claude-sonnet-4-5-20250929</text>
+<text x="302" y="151" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="12">Anthropic</text>
+<text x="462" y="151" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">100</text>
+<text x="542" y="151" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="11">2025-10-31</text>
+<text x="652" y="151" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="700">62.9%</text>
+<line x1="20" y1="164" x2="780" y2="164" stroke="#C3FFFD" stroke-width="0.5" opacity="0.15"/>
+<text x="32" y="187" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="500">4</text>
+<text x="82" y="187" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">Seed-1.8</text>
+<text x="302" y="187" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="12">ByteDance Seed</text>
+<text x="462" y="187" fill="#F9F9F9" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13">100</text>
+<text x="542" y="187" fill="#9BA4A6" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="11">2025-12-18</text>
+<text x="652" y="187" fill="#C3FFFD" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="13" font-weight="700">61.9%</text>
+<text x="780" y="222" fill="#5E6575" font-family="Inter, Helvetica, Roboto, sans-serif" font-size="10" text-anchor="end">Updated: 2026-04-02</text>
+</svg>
