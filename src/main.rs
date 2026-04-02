@@ -95,14 +95,20 @@ fn cell_to_string(cell: &Data) -> String {
 }
 
 fn parse_success_rate(s: &str) -> Option<f64> {
+    let has_percent = s.contains('%');
     let cleaned = s.replace('%', "").trim().to_string();
     let v = cleaned.parse::<f64>().ok()?;
     if v.is_nan() || v.is_infinite() {
         return None;
     }
-    // If calamine returned the raw Excel fraction (0..=1) instead of a
-    // percentage integer (0..=100), scale it up.
-    Some(if v > 0.0 && v <= 1.0 { v * 100.0 } else { v })
+    if has_percent {
+        // Value was already expressed as a percentage (e.g. "12.17%")
+        Some(v)
+    } else {
+        // If calamine returned the raw Excel fraction (0..=1) instead of a
+        // percentage integer (0..=100), scale it up.
+        Some(if v > 0.0 && v <= 1.0 { v * 100.0 } else { v })
+    }
 }
 
 fn render_svg(entries: &[Entry]) -> String {
