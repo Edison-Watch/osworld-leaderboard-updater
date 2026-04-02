@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-calamine = "0.26"
+calamine = { version = "0.26", features = ["dates"] }
 reqwest = { version = "0.12", features = ["blocking"] }
 chrono = "0.4"

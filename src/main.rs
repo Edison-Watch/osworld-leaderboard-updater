@@ -9,6 +9,7 @@ struct Entry {
     model: String,
     institution: String,
     max_steps: String,
+    date: String,
     success_rate: f64,
 }
 
@@ -43,6 +44,7 @@ fn parse_entries(data: &[u8]) -> Vec<Entry> {
     let i_coding = col("Additional coding-based action").expect("missing coding column");
     let i_rollout = col("Multiple rollout").expect("missing rollout column");
     let i_max_steps = col("Max steps").expect("missing Max steps column");
+    let i_date = col("Date").expect("missing Date column");
     let i_success = col("Success rate").expect("missing Success rate column");
 
     let mut entries: Vec<Entry> = Vec::new();
@@ -71,6 +73,7 @@ fn parse_entries(data: &[u8]) -> Vec<Entry> {
             model: get(i_model),
             institution: get(i_institution),
             max_steps: get(i_max_steps),
+            date: date_cell_to_string(row.get(i_date)),
             success_rate,
         });
     }
@@ -94,6 +97,33 @@ fn cell_to_string(cell: &Data) -> String {
     }
 }
 
+fn date_cell_to_string(cell: Option<&Data>) -> String {
+    match cell {
+        Some(Data::DateTime(dt)) => {
+            if let Some(nd) = dt.as_datetime() {
+                return nd.format("%Y-%m-%d").to_string();
+            }
+            format!("{dt}")
+        }
+        Some(Data::Float(f)) => excel_serial_to_date(*f),
+        Some(Data::Int(i)) => excel_serial_to_date(*i as f64),
+        Some(other) => cell_to_string(other).trim().to_string(),
+        None => String::new(),
+    }
+}
+
+fn excel_serial_to_date(serial: f64) -> String {
+    use chrono::NaiveDate;
+    let epoch = NaiveDate::from_ymd_opt(1899, 12, 30).unwrap();
+    let days = serial as i64;
+    // Excel has a leap year bug for 1900; dates >= 60 are off by 1
+    let days = if days >= 60 { days - 1 } else { days };
+    match epoch.checked_add_signed(chrono::Duration::days(days)) {
+        Some(d) => d.format("%Y-%m-%d").to_string(),
+        None => format!("{serial}"),
+    }
+}
+
 fn parse_success_rate(s: &str) -> Option<f64> {
     let has_percent = s.contains('%');
     let cleaned = s.replace('%', "").trim().to_string();
@@ -112,7 +142,7 @@ fn parse_success_rate(s: &str) -> Option<f64> {
 }
 
 fn render_svg(entries: &[Entry]) -> String {
-    let col_widths: [f64; 5] = [60.0, 260.0, 200.0, 100.0, 140.0];
+    let col_widths: [f64; 6] = [50.0, 220.0, 160.0, 80.0, 110.0, 140.0]; // Rank, Model, Institution, Max Steps, Date, Success Rate
     let table_width: f64 = col_widths.iter().sum();
     let row_height = 36.0;
     let header_height = 40.0;
@@ -157,7 +187,7 @@ fn render_svg(entries: &[Entry]) -> String {
     ));
 
     // Column headers
-    let headers = ["Rank", "Model", "Institution", "Max Steps", "Success Rate"];
+    let headers = ["Rank", "Model", "Institution", "Max Steps", "Date", "Success Rate"];
     let mut cx = table_x;
     for (i, &label) in headers.iter().enumerate() {
         let text_x = cx + 12.0;
@@ -234,6 +264,15 @@ fn render_svg(entries: &[Entry]) -> String {
             escape_xml(&entry.max_steps)
         ));
         cx += col_widths[3];
+
+        // Date
+        svg.push_str(&format!(
+            r##"<text x="{}" y="{text_y}" fill="#9BA4A6" font-size="11">{}</text>
+"##,
+            cx + 12.0,
+            escape_xml(&entry.date)
+        ));
+        cx += col_widths[4];
 
         // Success Rate
         svg.push_str(&format!(
