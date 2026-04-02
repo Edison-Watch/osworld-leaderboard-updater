@@ -1,0 +1,21 @@
+name: Update OSWorld Leaderboard
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Every Monday at midnight UTC
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo run --release -p osworld-leaderboard
+      - name: Commit if changed
+        run: |
+          git diff --quiet assets/osworld-leaderboard.svg && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/osworld-leaderboard.svg
+          git commit -m "chore: update OSWorld leaderboard"
+          git push
